@@ -123,12 +123,12 @@ module.exports = function (app, passport) {
 
   var PriceSchedule = require('../app/models/price');
   var requestLoop = setInterval(function(){
-    axios.get(url).then(function(res){ 
+    axios.get(url).then(function(res){
       var price = new PriceSchedule(res.data);
       price.save();
     }).catch(function(err) {
       console.log(err);
     });
-  }, 10000);
+  }, 2 * 60 * 60 * 1000); //2h * 60 min * 60s * 1000ms
 
 };
