@@ -19,18 +19,11 @@ export default {
     }
   },
   mounted () {
-    axios.get('https://cors-anywhere.herokuapp.com/https://projectzerothree.info/prices.php')
+    axios.get('http://localhost:3000/api/petrol')
       .then(response => {
         this.info = response.data
-        console.log(this.parseHTML(this.info))
+        console.log(this.info)
       })
-  },
-  methods: {
-    parseHTML: (html) => {
-      const re = /<table([0-9]|\w|\n)*<\/table>/
-      var found = html.match(re)
-      return found
-    }
   }
 }
 </script>

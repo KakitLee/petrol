@@ -20,6 +20,7 @@ module.exports = new LocalStrategy({
       criteria: { email: email }
     };
     User.load(options, function (err, user) {
+      console.log(user);
       if (err) return done(err);
       if (!user) {
         return done(null, false, { message: 'Unknown user' });

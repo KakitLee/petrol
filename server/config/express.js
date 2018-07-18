@@ -2,7 +2,7 @@
 /**
  * Module dependencies.
  */
-
+var axios = require('axios');
 var express = require('express');
 var session = require('express-session');
 var compression = require('compression');
@@ -15,6 +15,8 @@ var csrf = require('csurf');
 var cors = require('cors');
 
 var mongoStore = require('connect-mongo')(session);
+var mongoose = require('mongoose');
+var Schema = mongoose.Schema;
 var flash = require('connect-flash');
 var winston = require('winston');
 var helpers = require('view-helpers');
@@ -116,4 +118,17 @@ module.exports = function (app, passport) {
       next();
     });
   }
+
+  const url = 'https://projectzerothree.info/api.php?format=json';
+
+  var PriceSchedule = require('../app/models/price');
+  var requestLoop = setInterval(function(){
+    axios.get(url).then(function(res){ 
+      var price = new PriceSchedule(res.data);
+      price.save();
+    }).catch(function(err) {
+      console.log(err);
+    });
+  }, 10000);
+
 };
